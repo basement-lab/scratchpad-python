@@ -1,0 +1,18 @@
+{
+  "dash.docset.python": [
+    "python",
+    "django",
+    "twisted",
+    "sphinx",
+    "flask",
+    "tornado",
+    "sqlalchemy",
+    "numpy",
+    "scipy",
+    "salt",
+    "pandas",
+    "matplotlib",
+    "cvp"
+  ],
+  "python.formatting.formatOnSave": true
+}
