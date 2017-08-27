@@ -11,3 +11,5 @@ n) Exit the environment with `$ deactivate`
 ### Keep In Mind
 
 Things like packages _should be_ installed using `pip` from an "Active" environment.
+
+`shift + command + b` will execute the active file in the VS Code editor.
