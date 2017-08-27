@@ -1,6 +1,4 @@
 
-import numpy as np
-
 # Test Importing Numpy
 import numpy as np
 
@@ -12,4 +10,3 @@ b = np.array([[1, 2, 3, 9],
               [4, 5, 6, 9]])
 
 print(a.dot(b.transpose()))
-
