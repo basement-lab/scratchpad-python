@@ -104,3 +104,6 @@ ENV/
 # CUSTOM
 private/**
 !private/deep-learning-notation.pdf
+
+
+bin
