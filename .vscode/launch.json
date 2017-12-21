@@ -1,17 +1,19 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Launch",
-      "type": "python",
-      "request": "launch",
-      "stopOnEntry": false,
-      "program": "${workspaceRoot}/bootstrap.py",
-      "debugOptions": [
-        "WaitOnAbnormalExit",
-        "WaitOnNormalExit",
-        "RedirectOutput"
-      ]
-    }
-  ]
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Launch",
+			"type": "python",
+			"request": "launch",
+			"stopOnEntry": false,
+			// "program": "${workspaceRoot}/bootstrap.py",
+			"program": "${file}",
+			"pythonPath": "${config:python.pythonPath}",
+			"debugOptions": [
+				"WaitOnAbnormalExit",
+				"WaitOnNormalExit",
+				"RedirectOutput"
+			]
+		}
+	]
 }

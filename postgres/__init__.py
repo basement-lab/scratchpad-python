@@ -18,6 +18,7 @@ class Postgres:
     """
     Class: provides a connection and a NEW cursor with each query made
     """
+
     def __init__(self):
         self._connection = self._connect()
 
@@ -43,13 +44,19 @@ class Postgres:
         """
         self._connection.close()
 
-    def query(self, statement):
+    def query(self, statement, values):
         """
         Method: creates a Cursor, executes the SQL Query, closing the Cursor,
         and returning ALL of the results from the query
         """
         cur = self._cursor()
-        cur.execute(statement)
+
+        if values:
+            cur.execute(statement, values)
+        else:
+            cur.execute(statement)
+
         res = cur.fetchall()
         cur.close()
         return res
+
