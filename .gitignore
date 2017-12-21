@@ -82,6 +82,7 @@ celerybeat-schedule
 
 # Environments
 .env
+**/.env.*.sh
 .venv
 env/
 venv/
@@ -105,6 +106,8 @@ ENV/
 private/**
 !private/deep-learning-notation.pdf
 .vscode
+.vscode/**
 !.vscode/settings.json
 
 bin
+.vscode/tasks.json

@@ -4,14 +4,15 @@ and manages the Connection & Cursors to that database and provides convenient me
 making queries against that database.
 """
 
+import os
 import psycopg2
 
 
-DB_NAME = "lab"
-USER = "lab"
-PASSWORD = "basementlab"
-HOST = "localhost"
-PORT = "32770"
+DB_NAME = os.environ['POSTGRES_DB']
+USER = os.environ['POSTGRES_USER']
+PASSWORD = os.environ['POSTGRES_PASSWORD']
+HOST = os.environ['POSTGRES_HOST']
+PORT = os.environ['POSTGRES_PORT']
 
 
 class Postgres:
@@ -44,14 +45,14 @@ class Postgres:
         """
         self._connection.close()
 
-    def query(self, statement, values):
+    def query(self, statement, values=False):
         """
         Method: creates a Cursor, executes the SQL Query, closing the Cursor,
         and returning ALL of the results from the query
         """
         cur = self._cursor()
 
-        if values:
+        if values is False:
             cur.execute(statement, values)
         else:
             cur.execute(statement)
