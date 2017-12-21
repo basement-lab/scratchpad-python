@@ -1,6 +1,9 @@
+#!/usr/bin/env python
+
 """
-Module: provides a Class that proviedes a Connection to the Basement-Lab PostgreSQL database,
-and manages the Connection & Cursors to that database and provides convenient methods for
+Module: provides a Class that proviedes a Connection to the Basement-Lab
+PostgreSQL database, and manages the Connection & Cursors to that database
+and provides convenient methods for
 making queries against that database.
 """
 
@@ -15,49 +18,51 @@ HOST = os.environ['POSTGRES_HOST']
 PORT = os.environ['POSTGRES_PORT']
 
 
-class Postgres:
+class Postgres(object):
+  """
+  Class: provides a connection and a NEW cursor with each query made
+  """
+
+  def __init__(self):
+    self._connection = self._connect()
+
+  # def __new__(cls, name):
+  #     return cls._names_cache.setdefault(name, object.__new__(cls, name))
+
+  def _connect(self):
     """
-    Class: provides a connection and a NEW cursor with each query made
+    Method (private): returns a connection to the PostgreSQL database
     """
+    return psycopg2.connect(dbname=DB_NAME,
+                            user=USER,
+                            password=PASSWORD,
+                            host=HOST,
+                            port=PORT)
 
-    def __init__(self):
-        self._connection = self._connect()
+  def _cursor(self):
+    """
+    Method (private): returns a Cursor from the connected PostgreSQL database
+    """
+    return self._connection.cursor()
 
-    def _connect(self):
-        """
-        Method (private): returns a connection to the PostgreSQL database
-        """
-        return psycopg2.connect(dbname=DB_NAME,
-                                user=USER,
-                                password=PASSWORD,
-                                host=HOST,
-                                port=PORT)
+  def close(self):
+    """
+    Method: closes the Connection to the PostgreSQL Database
+    """
+    self._connection.close()
 
-    def _cursor(self):
-        """
-        Method (private): returns a Cursor from the connected PostgreSQL database
-        """
-        return self._connection.cursor()
+  def query(self, statement, values=False):
+    """
+    Method: creates a Cursor, executes the SQL Query, closing the Cursor,
+    and returning ALL of the results from the query
+    """
+    cur = self._cursor()
 
-    def close(self):
-        """
-        Method: closes the Connection to the PostgreSQL Database
-        """
-        self._connection.close()
+    if values is False:
+      cur.execute(statement, values)
+    else:
+      cur.execute(statement)
 
-    def query(self, statement, values=False):
-        """
-        Method: creates a Cursor, executes the SQL Query, closing the Cursor,
-        and returning ALL of the results from the query
-        """
-        cur = self._cursor()
-
-        if values is False:
-            cur.execute(statement, values)
-        else:
-            cur.execute(statement)
-
-        res = cur.fetchall()
-        cur.close()
-        return res
-
+    res = cur.fetchall()
+    cur.close()
+    return res

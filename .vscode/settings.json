@@ -16,4 +16,5 @@
 	],
 	"editor.formatOnSave": true,
 	"python.pythonPath": "/usr/local/bin/python3.6",
+	"python.linting.pylintPath": "/usr/local/bin/pylint"
 }
