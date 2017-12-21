@@ -1,0 +1,62 @@
+version: "3.3"
+
+services:
+  postgres:
+    container_name: basement-lab-postgres
+    image: postgres:latest
+    ports:
+      - 32770:5432
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-basementlab}
+      - POSTGRES_USER=${POSTGRES_USER:-lab}
+    volumes:
+      - basement_lab_postgres:/var/lib/postgresql/data/
+      # - ./docker/db/sql:/docker-entrypoint-initdb.d:ro
+
+  mongo: # SEE: https://hub.docker.com/_/mongo/
+    container_name: basement-lab-mongo
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    environment:
+      - MONGODB_ADMIN_USER=${MONGODB_ADMIN_USER:-lab}
+      - MONGODB_ADMIN_PASS=${MONGODB_ADMIN_PASS:-basementlab}
+    volumes:
+      - basement_lab_mongo:/data/db
+
+  neo4j:
+    container_name: basement-lab-neo4j
+    image: neo4j:latest
+    ports:
+      - 7473:7473
+      - 7474:7474
+      - 7687:7687
+    environment:
+      - NEO4J_AUTH=neo4j/basementlab
+      - NEO4J_CACHE_MEMORY=4G
+      - NEO4J_HEAP_MEMORY=4G
+      # - JAVA_OPTS="-Xms16G -Xmx25G -XX:+PrintCommandLineFlags"
+      # - JVM_OPTS=-Xmx4g -Xms4g -Xmx8g -XX:MaxPermSize=1024m
+      - JVM_OPTS=-Xmx4g -Xms4g -Xmx8g
+
+      # SEE: https://neo4j-contrib.github.io/neo4j-apoc-procedures/
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.///*
+    volumes:
+      - basement_lab_neo4j:/data
+      - $HOME/.neo4j/basement/conf:/conf
+      - $HOME/.neo4j/grow-ml/logs:/logs
+      - $HOME/.neo4j/grow-ml/plugins:/plugins
+    # pids_limit: -1
+    ulimits:
+      nproc: 512
+      nofile: 100000
+
+networks:
+  default:
+    external:
+      name: basement_lab
+
+volumes:
+  basement_lab_postgres:
+  basement_lab_mongo:
+  basement_lab_neo4j:

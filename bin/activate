@@ -55,15 +55,15 @@ fi
 if [ -z "$VIRTUAL_ENV_DISABLE_PROMPT" ] ; then
     _OLD_VIRTUAL_PS1="$PS1"
     if [ "x(scratchpad) " != x ] ; then
-	    PS1="(scratchpad) $PS1"
+	PS1="(scratchpad) $PS1"
     else
-        if [ "`basename \"$VIRTUAL_ENV\"`" = "__" ] ; then
-            # special case for Aspen magic directories
-            # see http://www.zetadev.com/software/aspen/
-            PS1="[`basename \`dirname \"$VIRTUAL_ENV\"\``] $PS1"
-        else
-            PS1="(`basename \"$VIRTUAL_ENV\"`)$PS1"
-        fi
+    if [ "`basename \"$VIRTUAL_ENV\"`" = "__" ] ; then
+        # special case for Aspen magic directories
+        # see http://www.zetadev.com/software/aspen/
+        PS1="[`basename \`dirname \"$VIRTUAL_ENV\"\``] $PS1"
+    else
+        PS1="(`basename \"$VIRTUAL_ENV\"`)$PS1"
+    fi
     fi
     export PS1
 fi
