@@ -105,7 +105,6 @@ ENV/
 # CUSTOM
 private/**
 !private/deep-learning-notation.pdf
-.vscode
 .vscode/**
 !.vscode/settings.json
 
